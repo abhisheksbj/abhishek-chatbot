@@ -1,3 +1,39 @@
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+from dotenv import load_dotenv
+import os
+
+# Load environment variables
+load_dotenv()
+
+# Create FastAPI app
+app = FastAPI()
+
+# ==============================
+# ENVIRONMENT VARIABLE TEST API
+# ==============================
+@app.get("/env-test")
+def env_test():
+    return {
+        "openai": bool(os.getenv("OPENAI_API_KEY")),
+        "ticketmaster": bool(os.getenv("TICKETMASTER_API_KEY"))
+    }
+
+# ==============================
+# STATIC FILES
+# ==============================
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# ==============================
+# HOME PAGE
+# ==============================
+@app.get("/")
+async def root():
+    return FileResponse("static/index.html")
+
+
+# =================================================================
 from dotenv import load_dotenv
 load_dotenv()
 
