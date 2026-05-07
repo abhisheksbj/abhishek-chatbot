@@ -5,9 +5,9 @@ TM_BASE = "https://app.ticketmaster.com/discovery/v2"
 
 
 def _api_key() -> str:
-    key = os.getenv("TM_API_KEY")
+    key = os.getenv("TICKETMASTER_API_KEY") or os.getenv("TM_API_KEY")
     if not key:
-        raise ValueError("TM_API_KEY not set")
+        raise ValueError("TICKETMASTER_API_KEY not set")
     return key
 
 
