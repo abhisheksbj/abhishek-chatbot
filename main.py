@@ -16,11 +16,14 @@ app = FastAPI(title="Ticketmaster AI Chatbot")
 # ==============================
 @app.get("/env-test")
 def env_test():
-    return {
-        "openai": bool(os.getenv("OPENAI_API_KEY")),
-        "ticketmaster": bool(os.getenv("TICKETMASTER_API_KEY"))
-    }
 
+    return {
+        "OPENAI_API_KEY": bool(os.getenv("OPENAI_API_KEY")),
+        "TICKETMASTER_API_KEY": bool(os.getenv("TICKETMASTER_API_KEY")),
+        "TICKETMASTER_DISCOVERY_API_KEY": bool(os.getenv("TICKETMASTER_DISCOVERY_API_KEY")),
+        "DISCOVERY_API_KEY": bool(os.getenv("DISCOVERY_API_KEY")),
+        "TM_API_KEY": bool(os.getenv("TM_API_KEY"))
+    }
 # ==============================
 # CHAT ROUTER
 # ==============================
