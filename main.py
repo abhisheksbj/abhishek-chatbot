@@ -1,14 +1,15 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
 from dotenv import load_dotenv
 import os
+
+from routers.chat import router as chat_router
 
 # Load environment variables
 load_dotenv()
 
-# Create FastAPI app
-app = FastAPI()
+# Create FastAPI app only ONCE
+app = FastAPI(title="Ticketmaster AI Chatbot")
 
 # ==============================
 # ENVIRONMENT VARIABLE TEST API
@@ -21,27 +22,11 @@ def env_test():
     }
 
 # ==============================
-# STATIC FILES
+# CHAT ROUTER
 # ==============================
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
-# ==============================
-# HOME PAGE
-# ==============================
-@app.get("/")
-async def root():
-    return FileResponse("static/index.html")
-
-
-# =================================================================
-from dotenv import load_dotenv
-load_dotenv()
-
-from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
-
-from routers.chat import router as chat_router
-
-app = FastAPI(title="Ticketmaster AI Chatbot")
 app.include_router(chat_router)
+
+# ==============================
+# STATIC FILES / HOME PAGE
+# ==============================
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
